@@ -2,16 +2,26 @@
 
 class Moneyzaurus
 {
+	const TOKEN_COOKIE_NAME = 'token';
+
 	/** @var Client */
 	private $client;
 
 	/** @var string */
 	private $token;
 
+	/** @var object */
+	private $instance;
+
+	/** @var User */
+	private $user;
+
 	public function __construct()
 	{
-		$load =& get_instance();
-		$this->client = $load->client;
+		$this->instance =& get_instance();
+		$this->client = $this->instance->client;
+		$this->instance->load->library('user');
+		$this->user = $this->instance->user;
 	}
 
 	public function setToken($token)
@@ -25,6 +35,15 @@ class Moneyzaurus
 		$this->token = $token;
 
 		return $this;
+	}
+
+	private function getToken()
+	{
+		if ($this->token === null) {
+			$this->setToken($this->user->findToken());
+		}
+
+		return $this->token;
 	}
 
 	public function userRegister(
@@ -65,7 +84,7 @@ class Moneyzaurus
 		return $this->client
 					->url('user/update')
 					->method(Client::POST)
-					->params(array_merge($request, ['token' => $this->token]))
+					->params(array_merge($request, ['token' => $this->getToken()]))
 					->call()
 					->response();
 	}
@@ -75,7 +94,7 @@ class Moneyzaurus
 		return $this->client
 			->url('user/data')
 			->method(Client::GET)
-			->params(['token' => $this->token])
+			->params(['token' => $this->getToken()])
 			->call()
 			->response();
 	}
@@ -104,7 +123,7 @@ class Moneyzaurus
 		return $this->client
 					->url('authenticate/logout')
 					->method(Client::GET)
-					->params(['token' => $this->token])
+					->params(['token' => $this->getToken()])
 					->call()
 					->response();
 	}
@@ -121,7 +140,7 @@ class Moneyzaurus
 
 	public function connectionList($parent)
 	{
-		$request = ['parent' => $parent, 'token' => $this->token];
+		$request = ['parent' => $parent, 'token' => $this->getToken()];
 
 		return $this->client
 					->url('connection/list')
@@ -133,7 +152,7 @@ class Moneyzaurus
 
 	public function connectionAdd($email)
 	{
-		$request = ['email' => $email, 'token' => $this->token];
+		$request = ['email' => $email, 'token' => $this->getToken()];
 
 		return $this->client
 					->url('connection/add')
@@ -148,7 +167,7 @@ class Moneyzaurus
 		return $this->client
 					->url('connection/reject/' . $id)
 					->method(Client::POST)
-					->params(['token' => $this->token])
+					->params(['token' => $this->getToken()])
 					->call()
 					->response();
 	}
@@ -158,7 +177,7 @@ class Moneyzaurus
 		return $this->client
 					->url('connection/accept/' . $id)
 					->method(Client::POST)
-					->params(['token' => $this->token])
+					->params(['token' => $this->getToken()])
 					->call()
 					->response();
 	}
@@ -169,7 +188,7 @@ class Moneyzaurus
 			'currency' => $currency,
 			'from'     => $from,
 			'till'     => $till,
-			'token'    => $this->token
+			'token'    => $this->getToken()
 		];
 
 		return $this->client
@@ -185,7 +204,7 @@ class Moneyzaurus
 		$request = [
 			'item'  => $item,
 			'group' => $group,
-			'token' => $this->token
+			'token' => $this->getToken()
 		];
 
 		return $this->client
@@ -200,7 +219,7 @@ class Moneyzaurus
 	{
 		$request = [
 			'item'  => $item,
-			'token' => $this->token
+			'token' => $this->getToken()
 		];
 
 		return $this->client
@@ -216,7 +235,7 @@ class Moneyzaurus
 		$request = [
 			'from'  => $from,
 			'count' => $count,
-			'token' => $this->token
+			'token' => $this->getToken()
 		];
 
 		return $this->client
@@ -232,7 +251,7 @@ class Moneyzaurus
 		$request = [
 			'from'  => $from,
 			'count' => $count,
-			'token' => $this->token
+			'token' => $this->getToken()
 		];
 
 		return $this->client
@@ -251,7 +270,7 @@ class Moneyzaurus
 			'price'    => $price,
 			'currency' => $currency,
 			'date'     => $date,
-			'token'    => $this->token
+			'token'    => $this->getToken()
 		];
 
 		return $this->client
@@ -272,7 +291,7 @@ class Moneyzaurus
 			'item'   => $item,
 			'group'  => $group,
 			'price'  => $price,
-			'token'  => $this->token
+			'token'  => $this->getToken()
 		];
 
 		return $this->client
@@ -291,7 +310,7 @@ class Moneyzaurus
 			'price'    => $price,
 			'currency' => $currency,
 			'date'     => $date,
-			'token'    => $this->token
+			'token'    => $this->getToken()
 		];
 
 		return $this->client
@@ -307,7 +326,7 @@ class Moneyzaurus
 		return $this->client
 			->url('transactions/remove/' . $id)
 			->method(Client::DELETE)
-			->params(['token' => $this->token])
+			->params(['token' => $this->getToken()])
 			->call()
 			->response();
 	}
@@ -317,7 +336,7 @@ class Moneyzaurus
 		return $this->client
 			->url('transactions/id/' . $id)
 			->method(Client::GET)
-			->params(['token' => $this->token])
+			->params(['token' => $this->getToken()])
 			->call()
 			->response();
 	}

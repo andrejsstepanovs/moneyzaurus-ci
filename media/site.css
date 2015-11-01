@@ -1,0 +1,23 @@
+.pure-menu {
+    background: #2d3e50;
+}
+
+.pure-menu a {
+    color: white;
+}
+
+div.header {
+    height: 3em
+}
+
+.message {
+    height: 1em;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+    color: white;
+}
+
+.error-message {
+    background-color: darkred;
+}
