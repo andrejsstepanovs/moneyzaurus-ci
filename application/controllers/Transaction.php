@@ -12,6 +12,18 @@ class Transaction extends CI_Controller
 	/** @var CI_Session */
 	public $session;
 
+	/** @var User */
+	public $user;
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		if (!$this->user->findToken()) {
+			redirect('');
+		}
+	}
+
 	public function index()
 	{
 		$this->load->view('layout/header');

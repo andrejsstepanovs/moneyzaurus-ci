@@ -15,6 +15,18 @@ class Ajax extends CI_Controller
 	/** @var CI_Output */
 	public $output;
 
+	/** @var User */
+	public $user;
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		if (!$this->user->findToken()) {
+			redirect('');
+		}
+	}
+
 	public function items()
 	{
 		$response = $this->moneyzaurus->distinctItems('2000-01-01', 999);
