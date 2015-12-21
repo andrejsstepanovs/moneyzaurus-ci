@@ -1,5 +1,6 @@
 <form method="post" action="/transaction/save" class="pure-form pure-form-aligned">
 
+	<input id="id" name="id" type="hidden" value="<?php echo $id; ?>" >
 	<fieldset>
 		<div class="pure-control-group">
 			<label for="item">Item</label>

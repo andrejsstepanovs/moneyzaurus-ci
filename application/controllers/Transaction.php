@@ -16,17 +16,37 @@ class Transaction extends CI_Controller
 	{
 		$this->load->view('layout/header');
 
-
 		$error = $this->session->flashdata('message');
+
+		$id = $this->input->get('id');
+		if (!empty($id)) {
+			$response = $this->moneyzaurus->transactionsId($id);
+			if ($response['code'] != 200 || !$response['data']['success']) {
+				$error = $response['data']['message'];
+			} else {
+				$data = $response['data']['data'];
+				$get = [
+					'id'    => $data['id'],
+					'item'  => $data['itemName'],
+					'group' => $data['groupName'],
+					'price' => $data['price'],
+					'date'  => $data['date'],
+				];
+			}
+		} else {
+			$get = $this->input->get(['item', 'group', 'price', 'date']);
+		}
+
 		$this->load->view('element/message', ['error' => $error]);
 
 		$data = [
+			'id'    => $id,
 			'item'  => '',
 			'group' => '',
 			'price' => '',
 			'date'  => date('Y-m-d'),
 		];
-		$get = $this->input->get(['item', 'group', 'price', 'date']);
+
 		if (empty($get['date'])) {
 			unset($get['date']);
 		}
@@ -36,7 +56,8 @@ class Transaction extends CI_Controller
 			$error = $this->session->flashdata('message');
 			$this->load->view('element/message', ['errors' => $error]);
 		} else {
-			$this->load->view('element/message', ['success' => 'Saved']);
+			$successText = !empty($id) ? 'Updated' : 'Saved';
+			$this->load->view('element/message', ['success' => $successText]);
 		}
 
 		$this->load->view('page/transaction', array_merge($data, $get));
@@ -46,15 +67,12 @@ class Transaction extends CI_Controller
 
 	public function save()
 	{
-		$data = $this->input->post(['item', 'group', 'price', 'date']);
-
-		$response = $this->moneyzaurus->transactionsAdd(
-			$data['item'],
-			$data['group'],
-			$data['price'],
-			'EUR',
-			$data['date']
-		);
+		$data = $this->input->post(['id', 'item', 'group', 'price', 'date']);
+		if (!empty($data['id'])) {
+			$response = $this->moneyzaurus->transactionsUpdate($data['id'], $data['item'], $data['group'], $data['price'], 'EUR', $data['date']);
+		} else {
+			$response = $this->moneyzaurus->transactionsAdd($data['item'], $data['group'], $data['price'], 'EUR', $data['date']);
+		}
 
 		if ($response['code'] == 200) {
 			if (!$response['data']['success']) {
