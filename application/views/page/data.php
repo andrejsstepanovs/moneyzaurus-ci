@@ -1,5 +1,6 @@
 <?php
 /** @var array $data */
+$total = ['price' => 0];
 ?>
 
 <table class="pure-table">
@@ -26,6 +27,18 @@
 					<a class="pure-button" href="transaction/delete?id=<?php echo $row['id']; ?>">Delete</a>
 				</td>
 			<tr>
+			<?php
+			$total['price'] += $row['amount'] / 100;
+			?>
 		<?php endforeach; ?>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="2">TOTAL</td>
+			<td><?php echo number_format($total['price'], 2, '.', ''); ?></td>
+			<td>COUNT</td>
+			<td><?php echo count($data); ?></td>
+			<td></td>
+		</tr>
+	</tfoot>
 </table>

@@ -1,3 +1,11 @@
+html, body {
+    height: 100%;
+}
+
+div.body {
+    margin-bottom: 80px;
+}
+
 .pure-menu {
     background: #2d3e50;
 }
@@ -40,4 +48,29 @@ h2 {
     width: 0;
     margin-left: auto;
     margin-right: auto;
+}
+
+.pure-table tfoot {
+    background: #111;
+    color: #888;
+    text-align: center;
+    padding: 0.5em 2em;
+    width: 100%;
+    margin: 48px 0 0;
+    vertical-align: bottom;
+}
+
+#footer {
+    height: 150px;
+}
+
+footer {
+    background: #111;
+    color: #888;
+    text-align: center;
+    position: fixed;
+    vertical-align: baseline;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
