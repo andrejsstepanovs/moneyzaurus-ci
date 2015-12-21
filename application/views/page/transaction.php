@@ -6,7 +6,6 @@ if ($id) {
 
 
 <form method="post" action="/transaction/save" class="pure-form pure-form-aligned">
-
 	<input id="id" name="id" type="hidden" value="<?php echo $id; ?>" >
 	<fieldset>
 		<div class="pure-control-group">
@@ -55,7 +54,6 @@ if ($id) {
 			<button type="submit" class="pure-button pure-button-primary">Save</button>
 		</div>
 	</fieldset>
-
 </form>
 
 <script>
