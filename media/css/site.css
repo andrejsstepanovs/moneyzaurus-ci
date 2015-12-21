@@ -4,6 +4,7 @@ html, body {
 
 div.body {
     margin-bottom: 80px;
+    min-height: 600px;
 }
 
 .pure-menu {
@@ -68,7 +69,7 @@ footer {
     background: #111;
     color: #888;
     text-align: center;
-    position: fixed;
+    height: 80px;
     vertical-align: baseline;
     bottom: 0;
     left: 0;

@@ -44,4 +44,67 @@ class Chart extends CI_Controller
 
 		$this->load->view('layout/footer');
 	}
+
+	public function index()
+	{
+		$this->load->view('layout/header');
+
+		$error = $this->session->flashdata('message');
+		$this->load->view('element/message', ['success' => $error]);
+
+		$filter   = $this->input->get(['from', 'till', 'groups']);
+		$from     = $filter['from'] ?: date('Y-m-01');
+		$till     = $filter['till'] ?: date('Y-m-t');
+		$response = $this->moneyzaurus->transactionsList(null, null, $from, $till, null, null, null);
+
+		if ($response['code'] == 200 && $response['data']['success']) {
+			$filterGroups = $filter['groups'] ?: [];
+			$data = $this->prepareChartData($response['data']['data'], $filterGroups, $from, $till);
+			$this->load->view('page/chart', ['data' => $data, 'from' => $from, 'till' => $till]);
+		}
+
+		$this->load->view('layout/footer');
+	}
+
+	private function prepareChartData(array $data, array $filterGroups, $from, $till)
+	{
+		$return = ['groups' => ['__total__'], 'selected' => [], 'data' => []];
+		foreach ($data as $row) {
+			if (array_search($row['groupName'], $return['groups']) === false) {
+				$return['groups'][] = $row['groupName'];
+			}
+		}
+
+		$return['selected'] = empty($filterGroups) ? ['__total__'] : $filterGroups;
+		$return['data']     = $this->groupByMonth($data, $return['selected'], $from, $till);
+
+		return $return;
+	}
+
+	public function groupByMonth(array $data, array $filterGroups, $from, $till)
+	{
+		$zeroValues    = array_combine(array_values($filterGroups), array_fill(0, count($filterGroups), 0));
+		$return        = [];
+		$tillTimestamp = strtotime($till);
+		$time          = strtotime($from);
+		do {
+			$step          = date('Y-m', $time);
+			$return[$step] = $zeroValues;
+			$time = strtotime('+1 month', $time);
+		} while ($time <= $tillTimestamp);
+
+		$total = in_array('__total__', $filterGroups) !== false;
+		foreach ($data as $row) {
+			$step  = date('Y-m', strtotime($row['date']));
+			$group = $row['groupName'];
+			if (array_key_exists($group, $return[$step])) {
+				$return[$step][$group] += $row['amount'] / 100;
+			}
+			if ($total) {
+				$return[$step]['__total__'] += $row['amount'] / 100;
+			}
+		}
+
+		return $return;
+	}
 }

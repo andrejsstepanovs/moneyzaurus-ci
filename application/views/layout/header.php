@@ -19,7 +19,8 @@
 					<ul class="pure-menu-list">
 						<li class="pure-menu-item"><a href="/transaction" class="pure-menu-link">New</a></li>
 						<li class="pure-menu-item"><a href="/data" class="pure-menu-link">Data</a></li>
-						<li class="pure-menu-item"><a href="/chart/pie" class="pure-menu-link">Chart</a></li>
+						<li class="pure-menu-item"><a href="/chart/pie" class="pure-menu-link">Pie</a></li>
+						<li class="pure-menu-item"><a href="/chart" class="pure-menu-link">Chart</a></li>
 						<li class="pure-menu-item"><a href="/profile" class="pure-menu-link">Profile</a></li>
 					</ul>
 				</div>
