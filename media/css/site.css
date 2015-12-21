@@ -21,3 +21,15 @@ div.header {
 .error-message {
     background-color: darkred;
 }
+
+.success-message {
+    background-color: green;
+}
+
+form {
+    margin:10px;
+}
+
+.suggest > span.pure-button {
+    margin-left: 5px;
+}

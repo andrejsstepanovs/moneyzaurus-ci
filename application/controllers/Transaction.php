@@ -26,10 +26,20 @@ class Transaction extends CI_Controller
 			'price' => '',
 			'date'  => date('Y-m-d'),
 		];
+		$get = $this->input->get(['item', 'group', 'price', 'date']);
+		if (empty($get['date'])) {
+			unset($get['date']);
+		}
 
-		$error = $this->session->flashdata('message');
-		$this->load->view('element/message', ['errors' => $error]);
-		$this->load->view('page/transaction', $data);
+		$success = $this->input->get('success');
+		if (!$success) {
+			$error = $this->session->flashdata('message');
+			$this->load->view('element/message', ['errors' => $error]);
+		} else {
+			$this->load->view('element/message', ['success' => 'Saved']);
+		}
+
+		$this->load->view('page/transaction', array_merge($data, $get));
 
 		$this->load->view('layout/footer');
 	}
@@ -50,13 +60,13 @@ class Transaction extends CI_Controller
 			if (!$response['data']['success']) {
 				$this->session->set_flashdata('message', $response['data']['message']);
 			} else {
-				$this->session->set_flashdata('message', $response['data']['data']['id']);
+				redirect('/transaction?success=' . $response['data']['data']['id']);
 			}
 
-			redirect('/transaction');
+			redirect('/transaction?' . http_build_query($data));
 		}
 
 		$this->session->set_flashdata('message', 'Error');
-		redirect('/transaction');
+		redirect('/transaction?' . http_build_query($data));
 	}
 }
