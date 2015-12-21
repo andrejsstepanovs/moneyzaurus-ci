@@ -31,17 +31,15 @@ class Chart extends CI_Controller
 		$till     = $filter['till'] ?: $default['till'];
 		$response = $this->moneyzaurus->chartPie($currency, $from, $till);
 
-		if ($response['code'] == 200) {
-			if ($response['data']['success']) {
-				$this->load->view(
-					'page/pie',
-					[
-						'data' => $response['data']['data'],
-						'from' => $from,
-						'till' => $till,
-					]
-				);
-			}
+		if ($response['code'] == 200 && $response['data']['success']) {
+			$this->load->view(
+				'page/pie',
+				[
+					'data' => $response['data']['data'],
+					'from' => $from,
+					'till' => $till,
+				]
+			);
 		}
 
 		$this->load->view('layout/footer');
