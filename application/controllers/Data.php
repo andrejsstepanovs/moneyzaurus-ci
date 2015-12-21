@@ -21,7 +21,7 @@ class Data extends CI_Controller
 
 		$offset = 0;
 		$limit  = 100;
-		$filter = $this->input->get('item', 'group', 'price', 'from', 'till');
+		$filter = $this->input->get(['item', 'group', 'price', 'from', 'till']);
 
 		$response = $this->moneyzaurus->transactionsList(
 			$offset,
@@ -30,7 +30,7 @@ class Data extends CI_Controller
 			$filter['till'],
 			$filter['item'],
 			$filter['group'],
-			$filter['price']
+			$filter['price'] * 100
 		);
 
 		if ($response['code'] == 200) {

@@ -32,13 +32,23 @@ if ($id) {
 
 		<div class="pure-control-group">
 			<label for="price">Price</label>
-			<input id="price" name="price" type="text" placeholder="Price" value="<?php echo $price; ?>" autocomplete="off">
+			<input id="price"
+			       name="price"
+			       type="text"
+			       placeholder="Price"
+			       value="<?php echo $price; ?>"
+			       autocomplete="off">
 			<span class="suggest" id="suggest-price"></span>
 		</div>
 
 		<div class="pure-control-group">
 			<label for="date">Date</label>
-			<input id="date" name="date" type="date" placeholder="Date" value="<?php echo $date; ?>" autocomplete="off">
+			<input id="date"
+			       name="date"
+			       type="date"
+			       placeholder="Date"
+			       value="<?php echo $date; ?>"
+			       autocomplete="off">
 		</div>
 
 		<div class="pure-controls">

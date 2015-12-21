@@ -5,14 +5,52 @@ $total = ['price' => 0];
 
 <table class="pure-table">
 	<thead>
-		<tr>
-			<th>Item</th>
-			<th>Group</th>
-			<th>Price</th>
-			<th>Date</th>
-			<th>User</th>
-			<th></th>
-		</tr>
+		<form method="get" action="" style="margin:0;">
+			<tr>
+				<th style="padding:5px;">
+					<input name="item"
+					       type="text"
+					       placeholder="Item"
+					       value="<?php echo $filter['item']; ?>"
+					       autocomplete="off"
+					       style="width:90px;">
+				</th>
+				<th style="padding:5px;">
+					<input name="group"
+					       type="text"
+					       placeholder="Group"
+					       value="<?php echo $filter['group']; ?>"
+					       autocomplete="off"
+					       style="width:90px;">
+				</th>
+				<th style="padding:5px;">
+					<input name="price"
+					       type="text"
+					       placeholder="Price"
+					       value="<?php echo $filter['price']; ?>"
+					       autocomplete="off"
+					       style="width:90px;">
+				</th>
+				<th style="padding:5px;">
+					<input name="from"
+					       type="date"
+					       placeholder="From"
+					       value="<?php echo $filter['from']; ?>"
+					       autocomplete="off"
+					       style="width:90px;">
+					<input name="till"
+					       type="date"
+					       placeholder="Till"
+					       value="<?php echo $filter['till']; ?>"
+					       autocomplete="off"
+					       style="width:90px;">
+				</th>
+				<th>User</th>
+				<th style="padding:5px;">
+					<button type="submit" class="pure-button pure-button-primary">Search</button>
+				</th>
+			</tr>
+		</form>
 	</thead>
 	<tbody>
 		<?php foreach ($data as $row) : ?>
