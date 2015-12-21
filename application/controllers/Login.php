@@ -18,12 +18,43 @@ class Login extends CI_Controller
 	public function post()
 	{
 		$data = $this->input->post(['email', 'password', 'remember']);
-		$response = $this->moneyzaurus->authenticateLogin($data['email'], $data['password']);
+		if ($this->loginCustomer($data['email'], $data['password'])) {
+			redirect('/transaction');
+		}
+		redirect('');
+	}
+
+	public function register()
+	{
+		$data = $this->input->post(['email', 'password']);
+
+		$response = $this->moneyzaurus->userRegister($data['email'], $data['password']);
+
+		if ($response['code'] == 200) {
+			if (!$response['data']['success']) {
+				$this->session->set_flashdata('message', $response['data']['message']);
+				redirect('');
+			}
+
+			$message = sprintf('Hi %s', $response['data']['data']['email']);
+			$this->session->set_flashdata('message', $message);
+
+			if ($this->loginCustomer($data['email'], $data['password'])) {
+				redirect('/transaction');
+			}
+		}
+
+		redirect('');
+	}
+
+	protected function loginCustomer($email, $password)
+	{
+		$response = $this->moneyzaurus->authenticateLogin($email, $password);
 
 		if ($response['code'] == 200) {
 			if (!$response['data']['success']) {
 				$this->session->set_flashdata('message', 'Login attempt failed');
-				redirect('');
+				return false;
 			}
 
 			//$response['data']['data']['expires_timestamp'];
@@ -32,10 +63,12 @@ class Login extends CI_Controller
 
 			$this->user->saveToken($response['data']['data']);
 
-			redirect('/transaction');
+			return true;
+
+		} else {
+			$this->session->set_flashdata('message', 'Something failed. "' . $response['code'] . '"');
 		}
 
-		$this->session->set_flashdata('message', 'Something failed. "' . $response['code'] . '"');
-		redirect('');
+		return false;
 	}
 }

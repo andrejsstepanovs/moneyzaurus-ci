@@ -62,10 +62,3 @@
 		</div>
 	</fieldset>
 </form>
-
-<hr/>
-	<h2>Connections</h2>
-	
-<hr/>
-
-<pre>API version: <?php echo $version; ?></pre>

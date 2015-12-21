@@ -25,12 +25,26 @@ class Profile extends CI_Controller
 			$viewData['data'] = $response['data']['data'];
 		}
 
+		$parent   = false;
+		$response = $this->moneyzaurus->connectionList($parent);
+		if ($response['code'] == 200) {
+			$viewData['connections_child'] = $response['data']['data'];
+		}
+
+		$parent   = true;
+		$response = $this->moneyzaurus->connectionList($parent);
+		if ($response['code'] == 200) {
+			$viewData['connections_parent'] = $response['data']['data'];
+		}
+
 		$response = $this->moneyzaurus->version();
 		if ($response['code'] == 200) {
 			$viewData['version'] = $response['data']['version'];
 		}
 
 		$this->load->view('page/profile', $viewData);
+		$this->load->view('page/connections', $viewData);
+		$this->load->view('page/version', $viewData);
 
 		$this->load->view('layout/footer');
 	}
@@ -62,5 +76,21 @@ class Profile extends CI_Controller
 	public function logout()
 	{
 		$response = $this->moneyzaurus->authenticateLogout();
+	}
+
+	public function invite()
+	{
+		$email    = $this->input->post('email');
+		$response = $this->moneyzaurus->connectionAdd($email);
+
+		if ($response['code'] == 200) {
+			if (!$response['data']['success']) {
+				$this->session->set_flashdata('message', $response['data']['message']);
+			} else {
+				$this->session->set_flashdata('message', 'User ' . $email . ' is invited to connect accounts');
+			}
+		}
+
+		redirect('/profile');
 	}
 }
