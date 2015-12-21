@@ -45,6 +45,7 @@ class Profile extends CI_Controller
 		$this->load->view('page/profile', $viewData);
 		$this->load->view('page/connections', $viewData);
 		$this->load->view('page/version', $viewData);
+		$this->load->view('page/logout', $viewData);
 
 		$this->load->view('layout/footer');
 	}
@@ -73,10 +74,6 @@ class Profile extends CI_Controller
 		redirect('/profile');
 	}
 
-	public function logout()
-	{
-		$response = $this->moneyzaurus->authenticateLogout();
-	}
 
 	public function invite()
 	{
@@ -93,4 +90,37 @@ class Profile extends CI_Controller
 
 		redirect('/profile');
 	}
+
+	public function acceptConnection()
+	{
+		$id       = $this->input->post('id');
+		$response = $this->moneyzaurus->connectionAccept($id);
+
+		if ($response['code'] == 200) {
+			if (!$response['data']['success']) {
+				$this->session->set_flashdata('message', $response['data']['message']);
+			} else {
+				$this->session->set_flashdata('message', 'Connection accepted');
+			}
+		}
+
+		redirect('/profile');
+	}
+
+	public function declineConnection()
+	{
+		$id       = $this->input->post('id');
+		$response = $this->moneyzaurus->connectionReject($id);
+
+		if ($response['code'] == 200) {
+			if (!$response['data']['success']) {
+				$this->session->set_flashdata('message', $response['data']['message']);
+			} else {
+				$this->session->set_flashdata('message', 'Connection rejected');
+			}
+		}
+
+		redirect('/profile');
+	}
+
 }

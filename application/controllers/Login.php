@@ -71,4 +71,16 @@ class Login extends CI_Controller
 
 		return false;
 	}
+
+	public function logout()
+	{
+		$response = $this->moneyzaurus->authenticateLogout();
+		if ($response['code'] == 200) {
+			if ($response['data']['success']) {
+				$this->session->set_flashdata('success', 'Bye!');
+			}
+		}
+
+		redirect('');
+	}
 }

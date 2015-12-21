@@ -43,4 +43,12 @@ class User
 
 		return $this;
 	}
+
+	public function deleteToken()
+	{
+		delete_cookie(self::TOKEN_COOKIE_NAME, null, -1, '/');
+		if (!empty($_COOKIE[self::TOKEN_COOKIE_NAME])) {
+			unset($_COOKIE[self::TOKEN_COOKIE_NAME]);
+		}
+	}
 }

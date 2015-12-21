@@ -28,8 +28,9 @@ class Welcome extends CI_Controller
 			}
 		}
 
-		$error = $this->session->flashdata('message');
-		$this->load->view('element/message', ['errors' => $error]);
+		$error   = $this->session->flashdata('message');
+		$success = $this->session->flashdata('success');
+		$this->load->view('element/message', ['errors' => $error, 'success' => $success]);
 		$this->load->view('page/welcome');
 		$this->load->view('layout/footer');
 	}

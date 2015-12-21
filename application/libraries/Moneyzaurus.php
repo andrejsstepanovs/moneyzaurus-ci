@@ -120,12 +120,16 @@ class Moneyzaurus
 
 	public function authenticateLogout()
 	{
-		return $this->client
+		$return = $this->client
 					->url('authenticate/logout')
 					->method(Client::GET)
 					->params(['token' => $this->getToken()])
 					->call()
 					->response();
+
+		$this->user->deleteToken();
+
+		return $return;
 	}
 
 	public function authenticatePasswordRecovery($username)
