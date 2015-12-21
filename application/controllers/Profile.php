@@ -20,6 +20,7 @@ class Profile extends CI_Controller
 		parent::__construct();
 
 		if (!$this->user->findToken()) {
+			sleep(5);
 			redirect('');
 		}
 	}
