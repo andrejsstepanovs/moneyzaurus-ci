@@ -16,6 +16,9 @@ class Data extends CI_Controller
 	{
 		$this->load->view('layout/header');
 
+		$error = $this->session->flashdata('message');
+		$this->load->view('element/message', ['success' => $error]);
+
 		$offset = 0;
 		$limit  = 100;
 		$filter = $this->input->get('item', 'group', 'price', 'from', 'till');

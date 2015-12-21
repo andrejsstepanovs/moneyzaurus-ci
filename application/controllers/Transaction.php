@@ -34,10 +34,10 @@ class Transaction extends CI_Controller
 				];
 			}
 		} else {
-			$get = $this->input->get(['item', 'group', 'price', 'date']);
+			$get = $this->input->get(['id', 'item', 'group', 'price', 'date']);
 		}
 
-		$this->load->view('element/message', ['error' => $error]);
+		$this->load->view('element/message', ['errors' => $error]);
 
 		$data = [
 			'id'    => $id,
@@ -56,11 +56,11 @@ class Transaction extends CI_Controller
 			$error = $this->session->flashdata('message');
 			$this->load->view('element/message', ['errors' => $error]);
 		} else {
-			$successText = !empty($id) ? 'Updated' : 'Saved';
-			$this->load->view('element/message', ['success' => $successText]);
+			$this->load->view('element/message', ['success' => 'Saved']);
 		}
 
-		$this->load->view('page/transaction', array_merge($data, $get));
+		$data = array_merge($data, $get);
+		$this->load->view('page/transaction', $data);
 
 		$this->load->view('layout/footer');
 	}
@@ -86,5 +86,21 @@ class Transaction extends CI_Controller
 
 		$this->session->set_flashdata('message', 'Error');
 		redirect('/transaction?' . http_build_query($data));
+	}
+
+	public function delete()
+	{
+		$id       = $this->input->get('id');
+		$response = $this->moneyzaurus->transactionsRemove($id);
+
+		if ($response['code'] == 200) {
+			if (!$response['data']['success']) {
+				$this->session->set_flashdata('message', $response['data']['message']);
+			} else {
+				$this->session->set_flashdata('message', 'Deleted');
+			}
+		}
+
+		redirect('/data');
 	}
 }

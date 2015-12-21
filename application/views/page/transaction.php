@@ -1,3 +1,10 @@
+<?php
+if ($id) {
+	echo '<h2>Edit</h2>';
+}
+?>
+
+
 <form method="post" action="/transaction/save" class="pure-form pure-form-aligned">
 
 	<input id="id" name="id" type="hidden" value="<?php echo $id; ?>" >

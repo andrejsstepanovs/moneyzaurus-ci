@@ -9,6 +9,7 @@
 			<th>Group</th>
 			<th>Price</th>
 			<th>Date</th>
+			<th>User</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -19,8 +20,10 @@
 				<td><?php echo $row['groupName']; ?></td>
 				<td><?php echo $row['money']; ?></td>
 				<td><?php echo $row['date']; ?></td>
+				<td><?php echo $row['userName']; ?></td>
 				<td>
-					<a href="transaction?id=<?php echo $row['id']; ?>">Edit</a>
+					<a class="pure-button" href="transaction?id=<?php echo $row['id']; ?>">Edit</a>
+					<a class="pure-button" href="transaction/delete?id=<?php echo $row['id']; ?>">Delete</a>
 				</td>
 			<tr>
 		<?php endforeach; ?>

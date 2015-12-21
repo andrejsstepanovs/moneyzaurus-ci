@@ -33,3 +33,11 @@ form {
 .suggest > span.pure-button {
     margin-left: 5px;
 }
+
+h2 {
+    margin: 10px;
+    color: gray;
+    width: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
