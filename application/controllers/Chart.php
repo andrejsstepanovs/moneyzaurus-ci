@@ -68,13 +68,25 @@ class Chart extends CI_Controller
 		$filter   = $this->input->get(['from', 'till', 'groups']);
 		$from     = $filter['from'] ?: date('Y-m-01');
 		$till     = $filter['till'] ?: date('Y-m-t');
-		$response = $this->moneyzaurus->transactionsList(null, null, $from, $till, null, null, null);
 
-		if ($response['code'] == 200 && $response['data']['success']) {
-			$filterGroups = $filter['groups'] ?: [];
-			$data = $this->prepareChartData($response['data']['data'], $filterGroups, $from, $till);
-			$this->load->view('page/chart', ['data' => $data, 'from' => $from, 'till' => $till]);
-		}
+		$responseData = [];
+		$step   = 500;
+		$offset = 0;
+		do {
+			$response = $this->moneyzaurus->transactionsList($offset, $step, $from, $till, null, null, null);
+			if ($response['code'] == 200 && $response['data']['success']) {
+				$count = $response['data']['count'];
+				$responseData = array_merge($responseData, $response['data']['data']);
+				$offset += $step;
+			} else {
+				break;
+			}
+		} while ($count >= $step);
+
+		$filterGroups = $filter['groups'] ?: [];
+		$data = $this->prepareChartData($responseData, $filterGroups, $from, $till);
+		$this->load->view('page/chart', ['data' => $data, 'from' => $from, 'till' => $till]);
+
 
 		$this->load->view('layout/footer');
 	}
