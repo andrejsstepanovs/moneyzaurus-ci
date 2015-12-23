@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title><?php echo isset($title) ? $title : ''; ?></title>
-		<link rel="stylesheet" href="/media/css/lib/pure-min.css">
-		<link rel="stylesheet" href="/media/css/lib/normalize.css">
-		<link rel="stylesheet" href="/media/css/site.css">
-		<script src="/media/js/lib/jquery.min.js" type="text/javascript"></script>
-		<script src="/media/js/lib/remote-list.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/pure-min.css">
+		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/normalize.css">
+		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/site.css">
+		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/jquery.min.js" type="text/javascript"></script>
+		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/remote-list.min.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="body">
