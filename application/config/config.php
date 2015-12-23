@@ -507,4 +507,4 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['moneyzaurus'] = 'http://localhost:8090';
+$config['moneyzaurus'] = 'http://www.moneyzaurus.com/api';

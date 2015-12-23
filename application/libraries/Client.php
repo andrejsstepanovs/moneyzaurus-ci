@@ -12,9 +12,9 @@ class Client
 	/** @var array */
 	private $response = [
 		'code'  => null,
-	    'body'  => null,
-	    'data'  => null,
-	    'error' => null
+		'body'  => null,
+		'data'  => null,
+		'error' => null
 	];
 
 	/** @var array */
@@ -104,6 +104,14 @@ class Client
 		$this->response['error'] = curl_error($this->curl);
 
 		curl_close($this->curl);
+
+		if (!empty($this->response['body'])) {
+			json_decode($this->response['body']);
+			if (json_last_error() != JSON_ERROR_NONE) {
+				echo $this->response['body'];
+				die();
+			}
+		}
 
 		return $this;
 	}
