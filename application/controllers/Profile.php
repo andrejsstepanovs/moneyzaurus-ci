@@ -50,14 +50,8 @@ class Profile extends CI_Controller
 			$viewData['connections_parent'] = $response['data']['data'];
 		}
 
-		$response = $this->moneyzaurus->version();
-		if ($response['code'] == 200) {
-			$viewData['version'] = $response['data']['version'];
-		}
-
 		$this->load->view('page/profile', $viewData);
 		$this->load->view('page/connections', $viewData);
-		$this->load->view('page/version', $viewData);
 		$this->load->view('page/logout', $viewData);
 
 		$this->load->view('layout/footer');
