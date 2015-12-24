@@ -106,7 +106,7 @@ define('WEB_BASE_URL', $webBaseUrl);
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-	$system_path = BASE_URL . '/system';
+	$system_path = BASE_URL . 'system';
 
 /*
  *---------------------------------------------------------------
@@ -121,7 +121,7 @@ define('WEB_BASE_URL', $webBaseUrl);
  *
  * NO TRAILING SLASH!
  */
-	$application_folder = BASE_URL . '/application';
+	$application_folder = BASE_URL . 'application';
 
 /*
  *---------------------------------------------------------------
