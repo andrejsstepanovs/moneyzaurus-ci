@@ -14,7 +14,7 @@
 	<body>
 		<div class="body">
 			<div class="header">
-				<div class="pure-menu pure-menu-horizontal pure-menu-fixed">
+				<div class="pure-menu pure-menu-horizontal">
 					<a class="pure-menu-heading" href="/">Moneyzaurus</a>
 
 					<ul class="pure-menu-list">
