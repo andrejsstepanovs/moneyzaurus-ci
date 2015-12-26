@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width; initial-scale = 1.0; maximum-scale=1.0; user-scalable=no" />
 		<title><?php echo isset($title) ? $title : ''; ?></title>
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/pure-min.css">
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/normalize.css">
@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/site.css">
 		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/jquery.min.js" type="text/javascript"></script>
 		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/awesomplete.js" type="text/javascript" async></script>
-	</head>
+    </head>
 	<body>
 		<div class="body">
 			<div class="header">

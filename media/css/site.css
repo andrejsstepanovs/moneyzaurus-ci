@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    font-size: 1.2em;
 }
 
 div.body {
@@ -16,7 +17,7 @@ div.body {
 }
 
 div.header {
-    height: 3em
+    height: 6em
 }
 
 .message {
@@ -49,6 +50,11 @@ h2 {
     width: 0;
     margin-left: auto;
     margin-right: auto;
+}
+
+.pure-menu-horizontal {
+    width: 100%;
+    white-space: normal;
 }
 
 .pure-table tfoot {
