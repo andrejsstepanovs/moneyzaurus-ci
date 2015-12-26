@@ -93,6 +93,21 @@ class Chart extends CI_Controller
 
 	private function prepareChartData(array $data, array $filterGroups, $from, $till)
 	{
+        $fromTime = strtotime($from);
+        $tillTime = strtotime($till);
+
+        if (
+            date('j', $fromTime) == 1 // starts with 1 day and ends with last
+            && date('j', $tillTime) == $tillDateTotalDays = date('t', $tillTime)
+            && date('m', $fromTime) != date('m', $tillTime)
+        ) {
+            $dateStr = 'Y-m';
+            $stepStr = '+1 month';
+        } else {
+            $dateStr = 'Y-m-d';
+            $stepStr = '+1 day';
+        }
+
 		$return = ['groups' => ['__total__'], 'selected' => [], 'data' => []];
 		foreach ($data as $row) {
 			if (array_search($row['groupName'], $return['groups']) === false) {
@@ -101,26 +116,39 @@ class Chart extends CI_Controller
 		}
 
 		$return['selected'] = empty($filterGroups) ? ['__total__'] : $filterGroups;
-		$return['data']     = $this->groupByMonth($data, $return['selected'], $from, $till);
+		$return['data']     = $this->groupByStep(
+            $data,
+            $return['selected'],
+            $from,
+            $till,
+            $dateStr,
+            $stepStr
+        );
 
 		return $return;
 	}
 
-	public function groupByMonth(array $data, array $filterGroups, $from, $till)
-	{
+	public function groupByStep(
+        array $data,
+        array $filterGroups,
+        $from,
+        $till,
+        $dateStr,
+        $stepStr
+    ) {
 		$zeroValues    = array_combine(array_values($filterGroups), array_fill(0, count($filterGroups), 0));
 		$return        = [];
 		$tillTimestamp = strtotime($till);
 		$time          = strtotime($from);
 		do {
-			$step          = date('Y-m', $time);
+			$step          = date($dateStr, $time);
 			$return[$step] = $zeroValues;
-			$time = strtotime('+1 month', $time);
+			$time = strtotime($stepStr, $time);
 		} while ($time <= $tillTimestamp);
 
 		$total = in_array('__total__', $filterGroups) !== false;
 		foreach ($data as $row) {
-			$step  = date('Y-m', strtotime($row['date']));
+			$step  = date($dateStr, strtotime($row['date']));
 			$group = $row['groupName'];
 			if (array_key_exists($group, $return[$step])) {
 				$return[$step][$group] += $row['amount'] / 100;
