@@ -66,7 +66,7 @@ class Chart extends CI_Controller
 		$this->load->view('element/message', ['success' => $error]);
 
 		$filter   = $this->input->get(['from', 'till', 'groups']);
-		$from     = $filter['from'] ?: date('Y-m-01');
+		$from     = $filter['from'] ?: date('Y-m-01', strtotime('-1 month'));
 		$till     = $filter['till'] ?: date('Y-m-t');
 
 		$responseData = [];
