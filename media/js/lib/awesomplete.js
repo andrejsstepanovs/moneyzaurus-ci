@@ -22,7 +22,7 @@
             minChars: 2,
             maxItems: 10,
             autoFirst: false,
-            filter: _.FILTER_CONTAINS,
+            filter: _.FILTER_STARTSWITH,
             sort: _.SORT_BYLENGTH,
             item: function (text, input) {
                 var html = input === '' ? text : text.replace(RegExp($.regExpEscape(input.trim()), "gi"), "<mark>$&</mark>");
@@ -224,7 +224,7 @@
                     .filter(function(item) {
                         return me.filter(item, value);
                     })
-                    .sort(this.sort)
+                    //.sort(this.sort)
                     .every(function(text, i) {
                         me.ul.appendChild(me.item(text, value));
 
