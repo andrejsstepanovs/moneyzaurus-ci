@@ -34,7 +34,9 @@ if ($id) {
 			<label for="price">Price</label>
 			<input id="price"
 			       name="price"
-			       type="text"
+			       type="number"
+			       step="any"
+			       min="0"
 			       placeholder="Price"
 			       value="<?php echo $price; ?>"
 			       autocomplete="off">
@@ -100,7 +102,7 @@ if ($id) {
 	item.on('keyup change', function() {
 		initGroupsPrediction();
 	});
-	group.on('keyup change', function() {
+	group.on('keyup change focus', function() {
 		initPricesPrediction();
 	});
 
