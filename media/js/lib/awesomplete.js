@@ -97,6 +97,15 @@
 
                 if (li && evt.button === 0) {  // Only select on left click
                     me.select(li);
+
+                    try {
+                        var inputEl = li.parentNode.parentNode.parentNode.querySelector("input").getAttribute("id");
+                        if (inputEl == 'item') {
+                            initGroupsPrediction();
+                        } else if (inputEl == 'group') {
+                            initPricesPrediction();
+                        }
+                    } catch(err) { }
                 }
             }
         }});
