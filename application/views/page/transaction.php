@@ -113,12 +113,19 @@ if ($id) {
 			data: {item: item.val()},
 			success: function(data) {
 				suggest.html("");
+                var firstSelected = false;
 				$.each(data, function(i, value){
 					var btn = document.createElement("a");
 					btn.href = "javascript:void(null)";
 					btn.appendChild(document.createTextNode(value));
 					btn.setAttribute("class", "pure-button");
 					suggest.append(btn);
+
+                    if (firstSelected === false) {
+                        group.val(value);
+                        group.get(0).setSelectionRange(0, value.length);
+                        firstSelected = true;
+                    }
 				});
 				initSuggestionButtons();
 			}
@@ -138,7 +145,8 @@ if ($id) {
 			data: {item:item.val(), group:group.val()},
 			success: function(data) {
 				suggest.html("");
-				$.each(data, function(i, value){
+                var firstSelected = false;
+                $.each(data, function(i, value){
 					var btn = document.createElement("a");
                     btn.href = "javascript:void(null)";
 					var amount = value.amount / 100;
@@ -146,8 +154,14 @@ if ($id) {
 					btn.appendChild(document.createTextNode(amount));
 					btn.setAttribute("class", "pure-button");
 					suggest.append(btn);
+
+                    if (firstSelected === false) {
+                        price.val(amount);
+                        price.get(0).setSelectionRange(0, amount.length);
+                        firstSelected = true;
+                    }
 				});
-				initSuggestionButtons();
+                initSuggestionButtons();
 			}
 		});
 	}
@@ -170,7 +184,4 @@ if ($id) {
 			});
 		});
 	}
-
-
-
 </script>
