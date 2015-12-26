@@ -115,16 +115,16 @@ if ($id) {
 				suggest.html("");
                 var firstSelected = false;
 				$.each(data, function(i, value){
-					var btn = document.createElement("a");
-					btn.href = "javascript:void(null)";
-					btn.appendChild(document.createTextNode(value));
-					btn.setAttribute("class", "pure-button");
-					suggest.append(btn);
-
                     if (firstSelected === false) {
                         group.val(value);
                         group.get(0).setSelectionRange(0, value.length);
                         firstSelected = true;
+                    } else {
+                        var btn = document.createElement("a");
+                        btn.href = "javascript:void(null)";
+                        btn.appendChild(document.createTextNode(value));
+                        btn.setAttribute("class", "pure-button");
+                        suggest.append(btn);
                     }
 				});
 				initSuggestionButtons();
@@ -147,18 +147,17 @@ if ($id) {
 				suggest.html("");
                 var firstSelected = false;
                 $.each(data, function(i, value){
-					var btn = document.createElement("a");
-                    btn.href = "javascript:void(null)";
-					var amount = value.amount / 100;
-
-					btn.appendChild(document.createTextNode(amount));
-					btn.setAttribute("class", "pure-button");
-					suggest.append(btn);
-
+                    var amount = value.amount / 100;
                     if (firstSelected === false) {
                         price.val(amount);
                         price.get(0).setSelectionRange(0, amount.length);
                         firstSelected = true;
+                    } else {
+                        var btn = document.createElement("a");
+                        btn.href = "javascript:void(null)";
+                        btn.appendChild(document.createTextNode(amount));
+                        btn.setAttribute("class", "pure-button");
+                        suggest.append(btn);
                     }
 				});
                 initSuggestionButtons();
