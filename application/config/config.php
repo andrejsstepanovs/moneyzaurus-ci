@@ -507,4 +507,6 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['moneyzaurus'] = 'http://www.moneyzaurus.com/api';
+//$config['moneyzaurus'] = 'http://www.moneyzaurus.com/api';
+$config['moneyzaurus'] = 'http://' . getenv('OPENSHIFT_PHP_IP') . ':' . getenv('OPENSHIFT_PHP_PORT') . '/api/';
+//$config['moneyzaurus'] = 'http://localhost:8090';
