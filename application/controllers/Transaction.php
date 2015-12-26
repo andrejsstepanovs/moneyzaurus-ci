@@ -50,7 +50,23 @@ class Transaction extends CI_Controller
 			$get = $this->input->get(['id', 'item', 'group', 'price', 'date']);
 		}
 
-		$this->load->view('element/message', ['errors' => $error]);
+        $response = $this->moneyzaurus->distinctItems('2000-01-01', 9999);
+        if ($response['code'] != 200 || !$response['data']['success']) {
+            $error = $response['data']['message'];
+            $items = [];
+        } else {
+            $items = $response['data']['data'];
+        }
+
+        $response = $this->moneyzaurus->distinctGroups('2000-01-01', 9999);
+        if ($response['code'] != 200 || !$response['data']['success']) {
+            $error = $response['data']['message'];
+            $groups = [];
+        } else {
+            $groups = $response['data']['data'];
+        }
+
+        $this->load->view('element/message', ['errors' => $error]);
 
 		$data = [
 			'id'    => $id,
@@ -73,6 +89,8 @@ class Transaction extends CI_Controller
 		}
 
 		$data = array_merge($data, $get);
+		$data['distinct_items']  = $items;
+		$data['distinct_groups'] = $groups;
 		$this->load->view('page/transaction', $data);
 
 		$this->load->view('layout/footer');

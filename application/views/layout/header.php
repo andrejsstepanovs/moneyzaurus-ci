@@ -6,9 +6,10 @@
 		<title><?php echo isset($title) ? $title : ''; ?></title>
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/pure-min.css">
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/normalize.css">
+		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/awesomplete.css">
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/site.css">
 		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/jquery.min.js" type="text/javascript"></script>
-		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/remote-list.min.js" type="text/javascript"></script>
+		<script src="<?php echo WEB_BASE_URL; ?>/media/js/lib/awesomplete.js" type="text/javascript" async></script>
 	</head>
 	<body>
 		<div class="body">

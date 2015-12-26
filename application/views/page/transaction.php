@@ -1,6 +1,7 @@
 <?php
+/** @var array distinct_items */
 if ($id) {
-	echo '<h2>Edit</h2>';
+    echo '<h2>Edit</h2>';
 }
 ?>
 
@@ -66,33 +67,32 @@ if ($id) {
 	var ajaxSuggestPredictGroups;
 	var ajaxSuggestPredictPrice;
 
-	item.focus();
+    item.focus();
 
-	item.remoteList({
-		minLength: 0,
-		source: function(value, response){
-			$.ajax({
-				url: 'ajax/items',
-				dataType: 'json',
-				success: function(data) {
-					response(data);
-				}
-			});
-		}
-	});
+    new Awesomplete(
+        item.get(0),
+        {
+            minChars: 0,
+            autoFirst: true,
+            list: <?php echo json_encode($distinct_items); ?>
+        }
+    );
 
-	group.remoteList({
-		minLength: 0,
-		source: function(value, response){
-			$.ajax({
-				url: 'ajax/groups',
-				dataType: 'json',
-				success: function(data) {
-					response(data);
-				}
-			});
-		}
-	});
+    item.on('keydown', function(evt) {
+        if (evt.keyCode === 13 && $(this).val().length) {
+            group.focus();
+            initGroupsPrediction();
+        }
+    });
+
+    new Awesomplete(
+        group.get(0),
+        {
+            minChars: 0,
+            autoFirst: true,
+            list: <?php echo json_encode($distinct_groups); ?>
+        }
+    );
 
 	item.on('keyup change', function() {
 		initGroupsPrediction();
@@ -168,4 +168,7 @@ if ($id) {
 			});
 		});
 	}
+
+
+
 </script>
