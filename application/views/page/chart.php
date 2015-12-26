@@ -6,6 +6,8 @@ foreach ($data['data'] as $month => $groupsData) {
 	$str[] = '[\'' . $month . '\', ' . implode(', ', $groupsData) . ']' . PHP_EOL;
 }
 $str = '['.implode(',', $str).']';
+
+$height = min(900, max(36 * count($data['selected']), 400));
 ?>
 
 <form method="get" action="/chart" class="pure-form pure-form-aligned">
@@ -64,7 +66,7 @@ $str = '['.implode(',', $str).']';
 					subtitle: 'Chart <?php echo $from . ' -> ' . $till; ?>'
 				},
 				width: 900,
-				height: 500
+				height: <?php echo $height; ?>
 			};
 
 			var chart = new google.charts.Line($('#chart_div').get(0));
