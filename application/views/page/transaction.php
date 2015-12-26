@@ -58,6 +58,7 @@ if ($id) {
 </form>
 
 <script>
+	var id           = $("#id");
 	var item         = $("#item");
 	var group        = $("#group");
 	var price        = $("#price");
@@ -66,6 +67,8 @@ if ($id) {
 
 	var ajaxSuggestPredictGroups;
 	var ajaxSuggestPredictPrice;
+
+    var predict = id.val().length ? false : true;
 
     item.focus();
 
@@ -102,6 +105,9 @@ if ($id) {
 	});
 
 	function initGroupsPrediction() {
+        if (!predict) {
+            return;
+        }
 		var suggest = $("#suggest-group");
 		if (ajaxSuggestPredictGroups != null){
 			ajaxSuggestPredictGroups.abort();
@@ -133,6 +139,9 @@ if ($id) {
 	}
 
 	function initPricesPrediction() {
+        if (!predict) {
+            return;
+        }
 		var suggest = $("#suggest-price");
 
 		if (ajaxSuggestPredictPrice != null){
