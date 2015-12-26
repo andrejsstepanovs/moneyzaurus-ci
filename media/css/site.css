@@ -39,7 +39,7 @@ form {
     margin:10px;
 }
 
-.suggest > span.pure-button {
+.suggest > a.pure-button {
     margin-left: 5px;
 }
 

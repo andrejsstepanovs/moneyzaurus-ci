@@ -114,7 +114,8 @@ if ($id) {
 			success: function(data) {
 				suggest.html("");
 				$.each(data, function(i, value){
-					var btn = document.createElement("span");
+					var btn = document.createElement("a");
+					btn.href = "javascript:void(null)";
 					btn.appendChild(document.createTextNode(value));
 					btn.setAttribute("class", "pure-button");
 					suggest.append(btn);
@@ -138,7 +139,8 @@ if ($id) {
 			success: function(data) {
 				suggest.html("");
 				$.each(data, function(i, value){
-					var btn = document.createElement("span");
+					var btn = document.createElement("a");
+                    btn.href = "javascript:void(null)";
 					var amount = value.amount / 100;
 
 					btn.appendChild(document.createTextNode(amount));
