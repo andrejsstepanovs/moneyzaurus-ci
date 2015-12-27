@@ -73,23 +73,27 @@
         </tr>
     </thead>
     <tbody>
+        <?php foreach ($monthly_transactions['rows'] as $row): ?>
         <tr>
-            <td>Dzīvoklis</td>
-            <td><?php echo 0; ?></td>
+            <td><?php echo $row['item'] . ' (' . $row['group'] . ')'; ?></td>
+            <td <?php echo $row['payed'] ? 'style="text-decoration:line-through;"' : '' ?>>
+                <?php echo $row['money']; ?>
+            </td>
         </tr>
+        <?php endforeach; ?>
     </tbody>
     <thead>
         <tr>
             <td>Total</td>
-            <td><?php echo 0; ?></td>
+            <td><?php echo $monthly_transactions['total']; ?></td>
         </tr>
         <tr>
             <td>Payed</td>
-            <td><?php echo 0; ?></td>
+            <td><?php echo $monthly_transactions['payed']; ?></td>
         </tr>
         <tr>
             <td>Left</td>
-            <td><?php echo 0; ?></td>
+            <td><?php echo $monthly_transactions['total'] - $monthly_transactions['payed']; ?></td>
         </tr>
     </thead>
 </table>
