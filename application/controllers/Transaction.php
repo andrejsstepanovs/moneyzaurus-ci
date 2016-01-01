@@ -73,7 +73,7 @@ class Transaction extends CI_Controller
 			'item'  => '',
 			'group' => '',
 			'price' => '',
-			'date'  => date('Y-m-d'),
+			'date'  => empty($get['date']) ? date('Y-m-d') : $get['date'],
 		];
 
 		if (empty($get['date'])) {
@@ -109,7 +109,10 @@ class Transaction extends CI_Controller
 			if (!$response['data']['success']) {
 				$this->session->set_flashdata('message', $response['data']['message']);
 			} else {
-				redirect('/transaction?success=' . $response['data']['data']['id']);
+                $data = [
+                    'success' => $response['data']['data']['id'],
+                    'date'    => $data['date']
+                ];
 			}
 
 			redirect('/transaction?' . http_build_query($data));
