@@ -16,8 +16,8 @@ div.body {
     color: white;
 }
 
-div.header {
-
+.right {
+    float: right;
 }
 
 .message {
@@ -26,6 +26,14 @@ div.header {
     margin: 5px;
     text-align: center;
     color: white;
+}
+
+.message-button {
+    cursor: pointer;
+    width: 35px;
+    margin: -3px;
+    border: 1px solid rgba(255, 255, 0, 0.53);
+    background-color: rgba(255, 255, 0, 0.45);
 }
 
 .error-message {

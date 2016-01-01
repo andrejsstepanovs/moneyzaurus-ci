@@ -1,10 +1,16 @@
 <?php
+$messages = [
+    'error'   => isset($errors)  ? $errors  : null,
+    'success' => isset($success) ? $success : null
+];
 
-if (!empty($errors)) {
-	echo '<div class="message error-message">' . $errors . '</div>';
+foreach ($messages as $type => $message) {
+    if (!empty($message)) {
+        ?>
+        <div class="message <?php echo $type; ?>-message">
+            <span><?php echo $message; ?></span>
+            <span class="right message-button">x</span>
+        </div>
+        <?php
+    }
 }
-
-if (!empty($success)) {
-	echo '<div class="message success-message">' . $success . '</div>';
-}
-
