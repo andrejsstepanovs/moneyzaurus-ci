@@ -60,6 +60,8 @@ if ($id) {
 </form>
 
 <script>
+jQuery(document).ready(function($) {
+
 	var id           = $("#id");
 	var item         = $("#item");
 	var group        = $("#group");
@@ -194,4 +196,5 @@ if ($id) {
 			});
 		});
 	}
+});
 </script>

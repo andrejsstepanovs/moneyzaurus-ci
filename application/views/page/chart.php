@@ -50,6 +50,7 @@ $height = min(900, max(36 * count($data['selected']), 400));
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
+$(document).ready(function() {
 	google.load('visualization', '1.1', {packages: ['line']});
 	google.setOnLoadCallback(
 		function() {
@@ -74,4 +75,5 @@ $height = min(900, max(36 * count($data['selected']), 400));
 			chart.draw(data, options);
 		}
 	);
+});
 </script>

@@ -36,6 +36,7 @@ $str = '['.implode(',', $str).']';
 
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
+$(document).ready(function() {
 	google.load('visualization', '1.0', {'packages':['corechart']});
 	google.setOnLoadCallback(
 		function drawChart() {
@@ -54,4 +55,5 @@ $str = '['.implode(',', $str).']';
 			);
 		}
 	);
+});
 </script>

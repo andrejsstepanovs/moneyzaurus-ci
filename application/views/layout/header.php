@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
         <link rel="shortcut icon" href="<?php echo WEB_BASE_URL; ?>/media/img/favicon.ico">
