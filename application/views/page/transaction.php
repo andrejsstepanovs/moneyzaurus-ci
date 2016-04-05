@@ -60,7 +60,7 @@ if ($id) {
 </form>
 
 <script>
-jQuery(document).ready(function($) {
+$(window).bind("load", function() {
 
 	var id           = $("#id");
 	var item         = $("#item");
