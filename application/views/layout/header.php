@@ -4,7 +4,8 @@
 		<meta charset="utf-8">
         <link rel="shortcut icon" href="<?php echo WEB_BASE_URL; ?>/media/img/favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
-		<title><?php echo isset($title) ? $title : ''; ?></title>
+        <meta name="theme-color" content="#2d3e50" />
+        <title><?php echo isset($title) ? $title : ''; ?></title>
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/pure-min.css">
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/normalize.css">
 		<link rel="stylesheet" href="<?php echo WEB_BASE_URL; ?>/media/css/lib/awesomplete.css">
