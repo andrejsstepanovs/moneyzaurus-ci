@@ -34,26 +34,24 @@ $str = '['.implode(',', $str).']';
 </form>
 <div id="chart_div"></div>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
 <script type="text/javascript">
-$(window).bind("load", function() {
-	google.load('visualization', '1.0', {'packages':['corechart']});
-	google.setOnLoadCallback(
-		function drawChart() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Group');
-			data.addColumn('number', 'Amount');
-			data.addRows(<?php echo $str; ?>);
-			var chart = new google.visualization.PieChart($('#chart_div').get(0));
-			chart.draw(
-				data,
-				{
-					'title': 'Pie chart <?php echo $from . ' -> ' . $till; ?>',
-					'width': 800,
-					'height': 500
-				}
-			);
-		}
-	);
+jQuery(function($) {
+    function drawCharts() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Group');
+        data.addColumn('number', 'Amount');
+        data.addRows(<?php echo $str; ?>);
+        var chart = new google.visualization.PieChart($('#chart_div').get(0));
+        chart.draw(
+            data,
+            {
+                'title': 'Pie chart <?php echo $from . ' -> ' . $till; ?>',
+                'width': 800,
+                'height': 500
+            }
+        );
+    }
+    google.load('visualization', '1.0', {'packages':['corechart'], 'callback': drawCharts});
 });
 </script>

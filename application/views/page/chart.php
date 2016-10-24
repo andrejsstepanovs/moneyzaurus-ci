@@ -48,32 +48,30 @@ $height = min(900, max(36 * count($data['selected']), 400));
 </form>
 <div id="chart_div" style="margin:15px;"></div>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
 <script type="text/javascript">
-$(window).bind("load", function() {
-	google.load('visualization', '1.1', {packages: ['line']});
-	google.setOnLoadCallback(
-		function() {
-			var data = new google.visualization.DataTable();
-			data.addColumn('string', 'Month');
-			<?php foreach ($data['selected'] as $group): ?>
-				data.addColumn('number', '<?php echo $group == '__total__' ? 'Total' : $group; ?>');
-			<?php endforeach; ?>
+jQuery(function($) {
+    function drawCharts() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Month');
+        <?php foreach ($data['selected'] as $group): ?>
+            data.addColumn('number', '<?php echo $group == '__total__' ? 'Total' : $group; ?>');
+        <?php endforeach; ?>
 
-			data.addRows(<?php echo $str; ?>);
-			var options = {
-				chart: {
-					title: '<?php echo implode(' ', $data['selected']); ?>',
-					subtitle: 'Chart <?php echo $from . ' -> ' . $till; ?>'
-				},
-				width: 900,
-				height: <?php echo $height; ?>
-			};
+        data.addRows(<?php echo $str; ?>);
+        var options = {
+            chart: {
+                title: '<?php echo implode(' ', $data['selected']); ?>',
+                subtitle: 'Chart <?php echo $from . ' -> ' . $till; ?>'
+            },
+            width: 900,
+            height: <?php echo $height; ?>
+        };
 
-			var chart = new google.charts.Line($('#chart_div').get(0));
+        var chart = new google.charts.Line($('#chart_div').get(0));
 
-			chart.draw(data, options);
-		}
-	);
+        chart.draw(data, options);
+    }
+    google.load('visualization', '1.1', {packages: ['line'], 'callback': drawCharts});
 });
 </script>
