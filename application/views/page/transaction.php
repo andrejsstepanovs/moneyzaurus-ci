@@ -60,19 +60,19 @@ if ($id) {
 </form>
 
 <script>
+var predict = false;
+var ajaxSuggestPredictGroups;
+var ajaxSuggestPredictPrice;
+var id           = $("#id");
+var item         = $("#item");
+var group        = $("#group");
+var price        = $("#price");
+var date         = $("#date");
+var suggestGroup = $("#suggest-group");
+
+
 $(window).bind("load", function() {
-
-	var id           = $("#id");
-	var item         = $("#item");
-	var group        = $("#group");
-	var price        = $("#price");
-	var date         = $("#date");
-	var suggestGroup = $("#suggest-group");
-
-	var ajaxSuggestPredictGroups;
-	var ajaxSuggestPredictPrice;
-
-    var predict = id.val().length ? false : true;
+    predict = id.val().length ? false : true;
 
     item.focus();
 
@@ -101,100 +101,100 @@ $(window).bind("load", function() {
         }
     );
 
-	item.on('keyup change', function() {
-		initGroupsPrediction();
-	});
-	group.on('keyup change focus', function() {
-		initPricesPrediction();
-	});
-
-	function initGroupsPrediction() {
-        if (!predict) {
-            return;
-        }
-		var suggest = $("#suggest-group");
-		if (ajaxSuggestPredictGroups != null){
-			ajaxSuggestPredictGroups.abort();
-			ajaxSuggestPredictGroups = null;
-		}
-		ajaxSuggestPredictGroups = $.ajax({
-			url: 'ajax/predictGroups',
-			dataType: 'json',
-			data: {item: item.val()},
-			success: function(data) {
-				suggest.html("");
-                var firstSelected = false;
-				$.each(data, function(i, value){
-                    if (firstSelected === false) {
-                        group.val(value);
-                        group.get(0).setSelectionRange(0, value.length);
-                        firstSelected = true;
-                    } else {
-                        var btn = document.createElement("a");
-                        btn.href = "javascript:void(null)";
-                        btn.appendChild(document.createTextNode(value));
-                        btn.setAttribute("class", "pure-button");
-                        suggest.append(btn);
-                    }
-				});
-				initSuggestionButtons();
-			}
-		});
-	}
-
-	function initPricesPrediction() {
-        if (!predict) {
-            return;
-        }
-		var suggest = $("#suggest-price");
-
-		if (ajaxSuggestPredictPrice != null){
-			ajaxSuggestPredictPrice.abort();
-			ajaxSuggestPredictPrice = null;
-		}
-		ajaxSuggestPredictPrice = $.ajax({
-			url: 'ajax/predictPrice',
-			dataType: 'json',
-			data: {item:item.val(), group:group.val()},
-			success: function(data) {
-				suggest.html("");
-                var firstSelected = false;
-                $.each(data, function(i, value){
-                    var amount = value.amount / 100;
-                    if (firstSelected === false) {
-                        price.val(amount);
-                        price.get(0).setSelectionRange(0, amount.length);
-                        firstSelected = true;
-                    } else {
-                        var btn = document.createElement("a");
-                        btn.href = "javascript:void(null)";
-                        btn.appendChild(document.createTextNode(amount));
-                        btn.setAttribute("class", "pure-button");
-                        suggest.append(btn);
-                    }
-				});
-                initSuggestionButtons();
-			}
-		});
-	}
-
-	function initSuggestionButtons() {
-		var childrenGroup = $("#suggest-group").children();
-		$.each(childrenGroup, function(index){
-			$(this).click(function() {
-				group.val(childrenGroup[index].innerHTML);
-				price.focus();
-				initPricesPrediction();
-			});
-		});
-
-		var childrenPrice = $("#suggest-price").children();
-		$.each(childrenPrice, function(index){
-			$(this).click(function() {
-				price.val(childrenPrice[index].innerHTML);
-				date.focus();
-			});
-		});
-	}
+    item.on('keyup change', function() {
+        initGroupsPrediction();
+    });
+    group.on('keyup change focus', function() {
+        initPricesPrediction();
+    });
 });
+
+function initGroupsPrediction() {
+    if (!predict) {
+        return;
+    }
+    var suggest = $("#suggest-group");
+    if (ajaxSuggestPredictGroups != null){
+        ajaxSuggestPredictGroups.abort();
+        ajaxSuggestPredictGroups = null;
+    }
+    ajaxSuggestPredictGroups = $.ajax({
+        url: 'ajax/predictGroups',
+        dataType: 'json',
+        data: {item: item.val()},
+        success: function(data) {
+            suggest.html("");
+            var firstSelected = false;
+            $.each(data, function(i, value){
+                if (firstSelected === false) {
+                    group.val(value);
+                    group.get(0).setSelectionRange(0, value.length);
+                    firstSelected = true;
+                } else {
+                    var btn = document.createElement("a");
+                    btn.href = "javascript:void(null)";
+                    btn.appendChild(document.createTextNode(value));
+                    btn.setAttribute("class", "pure-button");
+                    suggest.append(btn);
+                }
+            });
+            initSuggestionButtons();
+        }
+    });
+}
+
+function initPricesPrediction() {
+    if (!predict) {
+        return;
+    }
+    var suggest = $("#suggest-price");
+
+    if (ajaxSuggestPredictPrice != null){
+        ajaxSuggestPredictPrice.abort();
+        ajaxSuggestPredictPrice = null;
+    }
+    ajaxSuggestPredictPrice = $.ajax({
+        url: 'ajax/predictPrice',
+        dataType: 'json',
+        data: {item:item.val(), group:group.val()},
+        success: function(data) {
+            suggest.html("");
+            var firstSelected = false;
+            $.each(data, function(i, value){
+                var amount = value.amount / 100;
+                if (firstSelected === false) {
+                    price.val(amount);
+                    price.get(0).setSelectionRange(0, amount.length);
+                    firstSelected = true;
+                } else {
+                    var btn = document.createElement("a");
+                    btn.href = "javascript:void(null)";
+                    btn.appendChild(document.createTextNode(amount));
+                    btn.setAttribute("class", "pure-button");
+                    suggest.append(btn);
+                }
+            });
+            initSuggestionButtons();
+        }
+    });
+}
+
+function initSuggestionButtons() {
+    var childrenGroup = $("#suggest-group").children();
+    $.each(childrenGroup, function(index){
+        $(this).click(function() {
+            group.val(childrenGroup[index].innerHTML);
+            price.focus();
+            initPricesPrediction();
+        });
+    });
+
+    var childrenPrice = $("#suggest-price").children();
+    $.each(childrenPrice, function(index){
+        $(this).click(function() {
+            price.val(childrenPrice[index].innerHTML);
+            date.focus();
+        });
+    });
+}
 </script>
