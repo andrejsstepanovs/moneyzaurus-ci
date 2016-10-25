@@ -130,6 +130,8 @@ function initGroupsPrediction() {
                     group.val(value);
                     group.get(0).setSelectionRange(0, value.length);
                     firstSelected = true;
+                    
+                    initPricesPrediction();
                 } else {
                     var btn = document.createElement("a");
                     btn.href = "javascript:void(null)";
