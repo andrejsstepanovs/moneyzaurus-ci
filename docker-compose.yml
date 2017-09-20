@@ -1,0 +1,31 @@
+version: '2'
+services:
+
+    web:
+        image: nginx:latest
+        ports:
+            - "81:80"
+        restart: always
+        volumes:
+            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+            - "./etc/ssl:/etc/ssl"
+            - "./:/var/www/html"
+        depends_on:
+            - php-fpm
+    php-fpm:
+        image: cytopia/php-fpm-7.1
+        restart: always
+        environment:
+            - TIMEZONE=Europe/Berlin
+            - PHP_XDEBUG_ENABLE=1
+            - PHP_XDEBUG_REMOTE_HOST=localhost
+            - PHP_XDEBUG_REMOTE_PORT=9000
+        volumes:
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./:/var/www/html"
+
+    composer:
+        image: composer
+        volumes:
+            - "./:/app"
+        command: 'install --ignore-platform-reqs'
