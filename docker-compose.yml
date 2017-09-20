@@ -1,18 +1,19 @@
 version: '2'
 services:
 
-    web:
+    nginx-ci:
         image: nginx:latest
         ports:
-            - "81:80"
+            - "80:80"
         restart: always
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/ssl:/etc/ssl"
             - "./:/var/www/html"
         depends_on:
-            - php-fpm
-    php-fpm:
+            - php-fpm-ci
+            
+    php-fpm-ci:
         image: cytopia/php-fpm-7.1
         restart: always
         environment:
