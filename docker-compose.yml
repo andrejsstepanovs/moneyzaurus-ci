@@ -12,7 +12,7 @@ services:
             - "./:/var/www/html"
         depends_on:
             - php-fpm-ci
-            
+
     php-fpm-ci:
         image: cytopia/php-fpm-7.1
         restart: always
@@ -21,6 +21,7 @@ services:
             - PHP_XDEBUG_ENABLE=1
             - PHP_XDEBUG_REMOTE_HOST=localhost
             - PHP_XDEBUG_REMOTE_PORT=9000
+            - API_URL=nginx-api
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
             - "./:/var/www/html"
@@ -30,3 +31,8 @@ services:
         volumes:
             - "./:/app"
         command: 'install --ignore-platform-reqs'
+
+networks:
+    default:
+        external:
+            name: moneyzaurusapi_default
