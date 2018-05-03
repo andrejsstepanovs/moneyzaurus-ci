@@ -43,7 +43,7 @@ class Data extends CI_Controller
 			$filter['till'],
 			$filter['item'],
 			$filter['group'],
-			$filter['price'] * 100
+			(float)$filter['price'] * 100
 		);
 
 		if ($response['code'] == 200) {
