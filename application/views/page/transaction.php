@@ -160,13 +160,14 @@ function initPricesPrediction() {
         dataType: 'json',
         data: {item:item.val(), group:group.val()},
         success: function(data) {
+            console.log(data);
             suggest.html("");
             var firstSelected = false;
             $.each(data, function(i, value){
                 var amount = value.amount / 100;
                 if (firstSelected === false) {
                     price.val(amount);
-                    price.get(0).setSelectionRange(0, amount.length);
+                    //price.get(0).setSelectionRange(0, amount.length);
                     firstSelected = true;
                 } else {
                     var btn = document.createElement("a");
